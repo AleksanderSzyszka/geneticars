@@ -1,3 +1,5 @@
+require_relative 'car.rb'
+
 class Population
   def self.generate(population_count:)
     population = []
