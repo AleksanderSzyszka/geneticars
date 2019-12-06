@@ -17,6 +17,7 @@ class Car
   def to_h
     {
       id: id,
+      distance: distance,
       dna: dna
     }
   end
@@ -25,7 +26,7 @@ class Car
     dna.map! do |chromosome|
       probability = rand(0.0..1.0)
       if probability <= MUTATION_PROBABILITY
-        chromosome = rand(-1.0..1.0)
+        chromosome = rand(-1.0..1.0).round(2)
       else
         chromosome
       end

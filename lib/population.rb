@@ -1,4 +1,5 @@
 require_relative 'car.rb'
+require_relative 'simulate.rb'
 require 'pry'
 
 class Population
@@ -23,6 +24,10 @@ class Population
     end
   end
 
+  def winner
+    cars.max_by(&:distance)
+  end
+
   def load
     JSON.parse(File.read("./data/generation_#{generation_index}.json")).map do |car_attributes|
       @cars << Car.new(generation: generation_index, id: car_attributes['id'])
@@ -39,5 +44,9 @@ class Population
 
   def sample(number)
     cars.sample(number)
+  end
+
+  def simulate!(data)
+    Simulate.new(population: self, data: data).call
   end
 end
