@@ -1,6 +1,7 @@
 require 'pry'
 require './lib/population.rb'
 require './lib/crossover.rb'
+require './lib/selection.rb'
 
 class GeneticarsApi
   def call(env)
@@ -18,10 +19,18 @@ class GeneticarsApi
       population = Population.new(generation_index: generation_index)
       population.load
 
+      population.cars.each do |car|
+        distance = params.find { |data| data['id'] == car.id }['distance']
+        car.distance = distance
+      end
+
+      selection = Selection.new(population.cars)
+
       new_population = Population.new(generation_index: generation_index + 1)
       (population.count / 2).times do
-        car1, car2 = population.sample(2)
-        childrens = Crossover.new(mommy: car1, daddy: car2).call
+        mommy = selection.sample
+        daddy = selection.sample
+        childrens = Crossover.new(mommy: mommy, daddy: daddy).call
         childrens.each do |child|
           new_population.add(child)
         end

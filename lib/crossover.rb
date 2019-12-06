@@ -9,25 +9,18 @@ class Crossover
   end
 
   def call
-    first_half_3 = mommy.dna[0...point]
-    second_half_3 = daddy.dna[point..-1]
-
-    first_half_4 = daddy.dna[0...point]
-    second_half_4 = mommy.dna[point..-1]
-
-    new_car_3 = Car.new(
-      generation: generation, 
-      dna: first_half_3 + second_half_3
-    )
-    new_car_4 = Car.new(
-      generation: generation, 
-      dna: first_half_4 + second_half_4
-    )
-
-    [new_car_3, new_car_4]
+    [brother, sister].map { |child| child.mutate }
   end
 
   private
 
   attr_reader :mommy, :daddy, :point, :generation
+
+  def brother
+    Car.new(generation: generation, dna: mommy.dna[0...point] + daddy.dna[point..-1])
+  end
+
+  def sister
+    Car.new(generation: generation, dna: daddy.dna[0...point] + mommy.dna[point..-1])
+  end
 end
