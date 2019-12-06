@@ -2,7 +2,7 @@ require 'securerandom'
 require 'pry'
 
 class Car
-  MUTATION_PROBABILITY = 0.2
+  MUTATION_PROBABILITY = 0.3
 
   attr_reader :id, :generation
   attr_accessor :distance, :dna
@@ -25,7 +25,7 @@ class Car
     dna.map! do |chromosome|
       probability = rand(0.0..1.0)
       if probability <= MUTATION_PROBABILITY
-        chromosome = -2
+        chromosome = rand(-1.0..1.0)
       else
         chromosome
       end
