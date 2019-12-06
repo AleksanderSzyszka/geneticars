@@ -21,7 +21,7 @@ class Coronation
 
   def current_best
     JSON.parse(File.read("./data/best.json"))
-  rescue JSON::ParserError
+  rescue JSON::ParserError, Errno::ENOENT
     nil
   end
 end
