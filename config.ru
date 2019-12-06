@@ -7,7 +7,6 @@ require './lib/coronation.rb'
 class GeneticarsApi
   def call(env)
     request = Rack::Request.new(env)
-    params = JSON.parse(request.body.read)
     case request.path_info
     when '/generate_population'
       population = Population.new
@@ -16,6 +15,7 @@ class GeneticarsApi
 
       [200, { 'Content-Type' => 'application/json' }, [population.cars.map(&:to_h).to_json]]
     when '/crossover'
+      params = JSON.parse(request.body.read)
       generation_index = params.first['id'].split('_').first.to_i
       population = Population.new(generation_index: generation_index)
       population.load
