@@ -3,7 +3,7 @@ require_relative 'simulate.rb'
 require 'pry'
 
 class Population
-  POPULATION_COUNT = 50
+  POPULATION_COUNT = 1000
   attr_reader :generation_index, :cars
 
   def initialize(generation_index: 0)
@@ -30,7 +30,7 @@ class Population
 
   def load
     JSON.parse(File.read("./data/generation_#{generation_index}.json")).map do |car_attributes|
-      @cars << Car.new(generation: generation_index, id: car_attributes['id'])
+      @cars << Car.new(generation: generation_index, id: car_attributes['id'], dna: car_attributes['dna'])
     end
   end
 

@@ -25,7 +25,7 @@ class Selection
 
   def prepare_probabilities
     cars.each_with_object([]) do |car, arr|
-      car_occurence = (count_probability(car) * 100).to_i
+      car_occurence = (count_probability(car) * 1000).to_i
 
       car_occurence.times { arr << car }
     end
